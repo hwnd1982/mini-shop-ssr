@@ -13,11 +13,11 @@ export const useFiltersParams = ({query, min, max}: {query: ParsedUrlQuery, min:
   });
   const colorsParam = searchParams.get('colors');
   const [selectedColors, setSelectedColors] = useState<string[]>(
-    colorsParam ? Array.isArray(colorsParam) ? colorsParam  :[colorsParam] : []
+    colorsParam ? Array.isArray(colorsParam) ? colorsParam : colorsParam.split(',') : []
   );
   const categoriesParam = searchParams.get('categories');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    categoriesParam ? Array.isArray(categoriesParam) ? categoriesParam  :[categoriesParam] : []
+    categoriesParam ? Array.isArray(categoriesParam) ? categoriesParam : categoriesParam.split(',') : []
   );
   
 

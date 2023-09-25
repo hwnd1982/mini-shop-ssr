@@ -17,6 +17,7 @@ interface ColorListboxProps {
 export default function ColorListbox({className = '', colors, selectedColors, setSelectedColors}: ColorListboxProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(selectedColors);
   return (
       <Listbox value={selectedColors} onChange={setSelectedColors} multiple>
         <div className={clsx("relative mt-1", className)} >
