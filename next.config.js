@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    optimizeCss: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'seasoned-unequaled-attack.glitch.me',
+        port: '',
+        pathname: '/img/**',
+      },
+    ],
   },
 }
 
 module.exports = nextConfig;
- 

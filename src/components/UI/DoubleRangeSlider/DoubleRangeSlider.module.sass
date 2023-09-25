@@ -1,0 +1,18 @@
+.range
+  @apply absolute inset-x-0 inset-y-2/4 pointer-events-none appearance-none z-20  h-0 w-full opacity-0 cursor-pointer
+  &Bar
+    @apply absolute z-10 left-0 right-0 bottom-0 top-0 rounded-full bg-indigo-600
+  &Selected
+    @apply absolute z-10 inset-x-0 inset-y-2/4 translate-y-[-50%] h-2 rounded-full shadow-[rgba(87,13,248,1)_0_0_0_2px,rgba(87,13,248,.5)_inset_0_0_5px_1px]
+  &::-webkit-slider-thumb
+    @apply p-3 pointer-events-auto
+
+.price
+  @apply absolute right-2/4 translate-x-[50%] font-bold text-gray-600 text-sm px-2 py-1 text-center bg-indigo-300 rounded shadow-[rgba(87,13,248,.5)_inset_0_0_5px_1px]
+  &Max
+    @apply top-0 translate-y-[-110%]
+  &Min
+    @apply bottom-0 translate-y-[110%]
+
+.thumb
+  @apply absolute shadow-[rgba(87,13,248,1)_0_0_0_2px,rgba(87,13,248,.5)_inset_0_0_5px_1px] z-10 w-4 h-4 top-2/4 translate-y-[-50%] bg-indigo-300 rounded-full

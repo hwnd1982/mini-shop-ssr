@@ -1,30 +1,28 @@
 
 import {ReactNode} from 'react';
 import Head from "next/head";
-import { A } from "../A/A";
+import Header from '../Header/Header';
+import { NavigationState } from '@/store/features/navgationSlice';
 
-export const MainContainer = ({children, keywords}: {children: ReactNode, keywords: string}) => {
+export const MainContainer = ({
+  children,
+  keywords = '', 
+  navigation
+}: {
+  children: ReactNode,
+  keywords: string, 
+  navigation: NavigationState
+}) => {
   return (
     <>
     <Head>
-      <meta name="keywords" content={`nextjs` + keywords} />
+      <meta name="keywords" content={`nextjs ` + keywords} />
       <title>Главная страница</title>
     </Head>
-      <nav className="navbar">
-        <A href='/' text='Главная' />
-        <A href='/users' text='Пользователи' />
-      </nav>
-      <div>
-        {children}
-      </div>
-      <style jsx>
-        {`
-          .navbar {
-            background-color: orange;
-            padding: 15px;
-          } 
-        `}
-      </style>
+    <div>
+      <Header navigation={navigation} />
+      {children}
+    </div>
     </>
   )
 }

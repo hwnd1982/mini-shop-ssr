@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
 
 const config: Config = {
   content: [
@@ -7,6 +8,25 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    colors: {
+      ...colors,
+      transparent: '#fff0',
+      current: 'currentColor',
+      'c-black': '#000000',
+      'c-white': '#ffffff',
+      'c-red': '#dd0808',
+      'c-green': '#00a814',
+      'c-blue': '#180ae6',
+      'c-pink': '#df8fe0',
+      'c-grey': '#8A8A8A',
+      'c-yellow': '#e8e337',
+      'c-beige': '#F5F5DC',
+      'c-violet': '#5f4b8b',
+      'c-ruby': '#9b111e',
+      'c-deepskyblue': '#00bfff',
+      'c-bermudagreen': '#C5FAE8',
+      'c-milk': '#FDF1BD',
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -17,6 +37,8 @@ const config: Config = {
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
+    // Or with a custom prefix:
+    require('@headlessui/tailwindcss')({ prefix: 'ui' })
   ],
 }
 
