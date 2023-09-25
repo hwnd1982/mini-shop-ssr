@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'seasoned-unequaled-attack.glitch.me',
+        hostname: 'lava-overjoyed-tern.glitch.me',
         port: '',
         pathname: '/img/**',
       },
