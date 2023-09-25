@@ -1058,11 +1058,6 @@ video {
   border-color: rgb(79 70 229 / var(--tw-border-opacity));
 }
 
-.border-slate-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity));
-}
-
 .border-transparent {
   border-color: #fff0;
 }
@@ -1080,76 +1075,6 @@ video {
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-c-beige {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 220 / var(--tw-bg-opacity));
-}
-
-.bg-c-bermudagreen {
-  --tw-bg-opacity: 1;
-  background-color: rgb(197 250 232 / var(--tw-bg-opacity));
-}
-
-.bg-c-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-c-blue {
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 10 230 / var(--tw-bg-opacity));
-}
-
-.bg-c-deepskyblue {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 191 255 / var(--tw-bg-opacity));
-}
-
-.bg-c-green {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 168 20 / var(--tw-bg-opacity));
-}
-
-.bg-c-grey {
-  --tw-bg-opacity: 1;
-  background-color: rgb(138 138 138 / var(--tw-bg-opacity));
-}
-
-.bg-c-milk {
-  --tw-bg-opacity: 1;
-  background-color: rgb(253 241 189 / var(--tw-bg-opacity));
-}
-
-.bg-c-pink {
-  --tw-bg-opacity: 1;
-  background-color: rgb(223 143 224 / var(--tw-bg-opacity));
-}
-
-.bg-c-red {
-  --tw-bg-opacity: 1;
-  background-color: rgb(221 8 8 / var(--tw-bg-opacity));
-}
-
-.bg-c-ruby {
-  --tw-bg-opacity: 1;
-  background-color: rgb(155 17 30 / var(--tw-bg-opacity));
-}
-
-.bg-c-violet {
-  --tw-bg-opacity: 1;
-  background-color: rgb(95 75 139 / var(--tw-bg-opacity));
-}
-
-.bg-c-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-c-yellow {
-  --tw-bg-opacity: 1;
-  background-color: rgb(232 227 55 / var(--tw-bg-opacity));
 }
 
 .bg-gray-100 {
@@ -1513,76 +1438,6 @@ video {
   --tw-ring-color: rgb(0 0 0 / var(--tw-ring-opacity));
 }
 
-.ring-c-beige {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(245 245 220 / var(--tw-ring-opacity));
-}
-
-.ring-c-bermudagreen {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(197 250 232 / var(--tw-ring-opacity));
-}
-
-.ring-c-black {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(0 0 0 / var(--tw-ring-opacity));
-}
-
-.ring-c-blue {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(24 10 230 / var(--tw-ring-opacity));
-}
-
-.ring-c-deepskyblue {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(0 191 255 / var(--tw-ring-opacity));
-}
-
-.ring-c-green {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(0 168 20 / var(--tw-ring-opacity));
-}
-
-.ring-c-grey {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(138 138 138 / var(--tw-ring-opacity));
-}
-
-.ring-c-milk {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(253 241 189 / var(--tw-ring-opacity));
-}
-
-.ring-c-pink {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(223 143 224 / var(--tw-ring-opacity));
-}
-
-.ring-c-red {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(221 8 8 / var(--tw-ring-opacity));
-}
-
-.ring-c-ruby {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(155 17 30 / var(--tw-ring-opacity));
-}
-
-.ring-c-violet {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(95 75 139 / var(--tw-ring-opacity));
-}
-
-.ring-c-white {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
-}
-
-.ring-c-yellow {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(232 227 55 / var(--tw-ring-opacity));
-}
-
 .ring-gray-300 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
@@ -1590,10 +1445,6 @@ video {
 
 .ring-opacity-5 {
   --tw-ring-opacity: 0.05;
-}
-
-.ring-offset-1 {
-  --tw-ring-offset-width: 1px;
 }
 
 .filter {
@@ -1604,12 +1455,6 @@ video {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.transition-all {
-  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }

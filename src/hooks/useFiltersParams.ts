@@ -1,9 +1,8 @@
 import { getSearchParams } from "@/utils/getSearchParams";
-import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
 
-export const useFiltersParams = ({min, max}: {min: number, max: number}) => {
-  const {query} = useRouter();
+export const useFiltersParams = ({query, min, max}: {query: ParsedUrlQuery, min: number, max: number}) => {
   const except = ['page'];
   const searchParams = getSearchParams(query, except);
 

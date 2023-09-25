@@ -1,4 +1,4 @@
-import Pagination from "@/components/Pagination/Pagination";
+import Pagination from "@/components/UI/Pagination/Pagination";
 import { API_URL } from "@/store/const";
 import { fetchGoods, GoodsState } from "@/store/features/goodsSlice";
 import { NavigationState } from "@/store/features/navgationSlice";
@@ -6,15 +6,9 @@ import { wrapper } from "@/store/store";
 import { AppThunkDispatch } from "@/types/types";
 import { MainContainer } from "@/components/MainContainer/MainContainer";
 import { ColorsState } from "@/store/features/colorsSlice";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
-import ColorListbox from "@/components/UI/ColorListbox/ColorListbox";
-import PriceListbox from "@/components/UI/PriceListbox/PriceListbox";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Filter from "@/components/Filter/Filter";
-
-
+import ColorsList from "@/components/UI/ColorsList/ColorsList";
 
 export default function Index({navigation, colors, goods}: {navigation: NavigationState, colors: ColorsState, goods: GoodsState}) {
   const {list, page, pages, totalCount} = goods;
@@ -43,14 +37,9 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
                     <p className="mb-4 text-base font-semibold text-black">
                       {product.price}₽
                     </p>
-                    <div className="relative gap-2 mb-4 flex justify-center">
-                      {product.colors.map(colorId => {
-                        const color = colors.list.find(color => color.id === colorId);
-                        
-                        return <div key={`${product.id}-${color?.title}`} className={`w-5 h-5 bg-c-${color?.title} transition-all rounded-full block ring-c-${color?.title === 'white' ? 'slate-300' : color?.title} ring-offset-1${color?.title === 'white' ? ' border border-slate-300' : ''}`} ></div>
-                      })}
-                    <div className="sr-only bg-c-black bg-c-white bg-c-red bg-c-green bg-c-blue bg-c-pink bg-c-grey bg-c-yellow bg-c-beige bg-c-violet bg-c-ruby bg-c-deepskyblue bg-c-bermudagreen bg-c-milk ring-c-black ring-c-white ring-c-red ring-c-green ring-c-blue ring-c-pink ring-c-grey ring-c-yellow ring-c-beige ring-c-violet ring-c-ruby ring-c-deepskyblue ring-c-bermudagreen ring-c-milk"></div>
-                    </div>
+
+                    <ColorsList product={product} colors={colors} />
+
                     <Link href={`products/${product.id}`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
                         Shop Now
                     </Link>

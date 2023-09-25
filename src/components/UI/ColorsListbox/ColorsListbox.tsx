@@ -2,7 +2,7 @@ import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Color } from '@/store/features/colorsSlice'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import s from './ColorListbox.module.sass';
+import s from './ColorsListbox.module.sass';
 import clsx from 'clsx';
 
 export type SetSelectedColors = Dispatch<SetStateAction<string[]>>
