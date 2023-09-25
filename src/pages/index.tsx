@@ -49,6 +49,7 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
                         
                         return <div key={`${product.id}-${color?.title}`} className={`w-5 h-5 bg-c-${color?.title} transition-all rounded-full block ring-c-${color?.title === 'white' ? 'slate-300' : color?.title} ring-offset-1${color?.title === 'white' ? ' border border-slate-300' : ''}`} ></div>
                       })}
+                    <div className="sr-only bg-c-black bg-c-white bg-c-red bg-c-green bg-c-blue bg-c-pink bg-c-grey bg-c-yellow bg-c-beige bg-c-violet bg-c-ruby bg-c-deepskyblue bg-c-bermudagreen bg-c-milk ring-c-black ring-c-white ring-c-red ring-c-green ring-c-blue ring-c-pink ring-c-grey ring-c-yellow ring-c-beige ring-c-violet ring-c-ruby ring-c-deepskyblue ring-c-bermudagreen ring-c-milk"></div>
                     </div>
                     <Link href={`products/${product.id}`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
                         Shop Now
