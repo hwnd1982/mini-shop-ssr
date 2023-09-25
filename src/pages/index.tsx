@@ -9,6 +9,7 @@ import { ColorsState } from "@/store/features/colorsSlice";
 import Link from "next/link";
 import Filter from "@/components/Filter/Filter";
 import ColorsList from "@/components/UI/ColorsList/ColorsList";
+import Image from "next/image";
 
 export default function Index({navigation, colors, goods}: {navigation: NavigationState, colors: ColorsState, goods: GoodsState}) {
   const {list, page, pages, totalCount} = goods;
@@ -23,9 +24,12 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
               {list.map((product) => (
                 <div key={product.id} className="grid grid-rows-[min-content_1fr]">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                    <img
+                    <Image
+                      width={600}
+                      height={600}
                       src={`${API_URL}/${product.pic}`}
                       alt={product.title}
+                      priority={true}
                       className="h-full w-full object-cover object-top group-hover:opacity-75" />
                   </div>
                   <div className="flex flex-col items-center text-center">
