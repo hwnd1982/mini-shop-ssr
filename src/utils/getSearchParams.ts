@@ -3,15 +3,13 @@ import { ParsedUrlQuery } from "querystring";
 export const getSearchParams = (params: ParsedUrlQuery, except: string[] = []) => {
   const searchParams = new URLSearchParams();
     
-    for (const key in params) {
-      const value = params[key] || '';
+  for (const key in params) {
+    const value = params[key] || '';
 
-      if (!Array.isArray(value) && !except.includes(key)) {
-        searchParams.append(key,  value);
-      }
+    if (!Array.isArray(value) && !except.includes(key)) {
+      searchParams.append(key,  value);
     }
-
-  console.log(searchParams.toString());
+  }
 
   return searchParams;
 }
