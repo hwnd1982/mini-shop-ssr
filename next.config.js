@@ -9,6 +9,7 @@ const nextConfig = {
         pathname: '/img/**',
       },
     ],
+    minimumCacheTTL: 60,
   },
 }
 
