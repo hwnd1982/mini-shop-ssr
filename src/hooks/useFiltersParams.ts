@@ -20,6 +20,11 @@ export const useFiltersParams = ({query, min, max}: {query: ParsedUrlQuery, min:
     categoriesParam ? Array.isArray(categoriesParam) ? categoriesParam : categoriesParam.split(',') : []
   );
   
+  const resetFilters = () => {
+    setPriceRange({max, min});
+    setSelectedColors([]);
+    setSelectedCategories([])
+  }
 
   useEffect(() => {
     const filters = getSearchParams(query, except);
@@ -53,6 +58,7 @@ export const useFiltersParams = ({query, min, max}: {query: ParsedUrlQuery, min:
 
   return {
     filters,
+    resetFilters,
     priceRange,
     setPriceRange,
     selectedColors,

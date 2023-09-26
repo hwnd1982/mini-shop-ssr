@@ -10,30 +10,18 @@ import Link from "next/link";
 import Filter from "@/components/Filter/Filter";
 import ColorsList from "@/components/UI/ColorsList/ColorsList";
 import Image from "next/image";
-
-const keyStr =
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
-
-const triplet = (e1: number, e2: number, e3: number) =>
-  keyStr.charAt(e1 >> 2) +
-  keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
-  keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
-  keyStr.charAt(e3 & 63)
-
-const rgbDataURL = (r: number, g: number, b: number) =>
-  `data:image/gif;base64,R0lGODlhAQABAPAA${
-    triplet(0, r, g) + triplet(b, 255, 255)
-  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`
+import { rgbDataURL } from "@/utils/rgbDataURL";
 
 export default function Index({navigation, colors, goods}: {navigation: NavigationState, colors: ColorsState, goods: GoodsState}) {
   const {list, page, pages, totalCount} = goods;
+  const rgbData = rgbDataURL(200,200,200);
 
   return (
     <MainContainer keywords={'main page'} navigation={navigation}>
       <main className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>
-            <Filter min={100} max={10000} colors={colors} />
+            <Filter min={100} max={10000} colors={colors} navigation={navigation} />
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 pb-10">
               {list.map((product) => (
                 <div key={product.id} className="grid grid-rows-[min-content_1fr]">
@@ -45,7 +33,7 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
                       alt={product.title}
                       priority={true}
                       placeholder="blur"
-                      blurDataURL={rgbDataURL(237, 181, 6)}
+                      blurDataURL={rgbData}
                       className="h-full w-full object-cover object-top group-hover:opacity-75" />
                   </div>
                   <div className="flex flex-col items-center text-center">

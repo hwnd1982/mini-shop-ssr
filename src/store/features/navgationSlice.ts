@@ -2,6 +2,11 @@ import { createAppAsyncThunk, FetchingState } from "@/types/types";
 import { createSlice} from "@reduxjs/toolkit";
 import { CATEGOY_URL, getData } from "../const";
 
+export type Category = {
+  title: string
+  slug: string
+}
+
 export interface Navigation {
   [key: string]: {
     title: string,
@@ -12,10 +17,7 @@ export interface Navigation {
         [key: string]: string
       },
     },
-    list: {
-      title: string,
-      slug: string
-    }[]
+    list: Category[]
   }
 }
 

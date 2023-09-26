@@ -46,7 +46,7 @@ export default function DoubleRangeSlider({ className = '', min, max, step = 100
   const [thumbPosition, setThumbPosition] = useState(rangeToThumbPosition(range));
 
   return (
-    <fieldset className={clsx("px-6 py-12 min-w-[280px]", className)}>
+    <fieldset className={clsx("px-6 py-12 sm:min-w-[280px]", className)}>
       <div className="relative z-10 h-1">
         <input 
           className={s.range}
