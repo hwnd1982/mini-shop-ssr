@@ -30,6 +30,7 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
                       src={`${API_URL}/${product.pic}`}
                       alt={product.title}
                       priority={true}
+                      placeholder="blur"
                       className="h-full w-full object-cover object-top group-hover:opacity-75" />
                   </div>
                   <div className="flex flex-col items-center text-center">
@@ -60,6 +61,11 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   const dispatch:AppThunkDispatch = store.dispatch;
+  
+  ctx.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  );
 
   await dispatch(fetchGoods(ctx.query));
   return ({props:store.getState()})
