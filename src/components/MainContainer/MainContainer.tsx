@@ -3,15 +3,21 @@ import {ReactNode} from 'react';
 import Head from "next/head";
 import Header from '../Header/Header';
 import { NavigationState } from '@/store/features/navgationSlice';
+import { CartState } from '@/store/features/cartSlice';
+import { ColorsState } from '@/store/features/colorsSlice';
 
 export const MainContainer = ({
   children,
   keywords = '', 
-  navigation
+  navigation,
+  colors,
+  cart
 }: {
-  children: ReactNode,
-  keywords: string, 
+  children: ReactNode
+  keywords: string
+  colors: ColorsState
   navigation: NavigationState
+  cart: CartState
 }) => {
   return (
     <>
@@ -20,7 +26,7 @@ export const MainContainer = ({
       <title>Главная страница</title>
     </Head>
     <div>
-      <Header navigation={navigation} />
+      <Header navigation={navigation} cart={cart} colors={colors}/>
       {children}
     </div>
     </>

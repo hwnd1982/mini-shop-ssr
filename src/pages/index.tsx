@@ -11,13 +11,14 @@ import Filter from "@/components/Filter/Filter";
 import ColorsList from "@/components/UI/ColorsList/ColorsList";
 import Image from "next/image";
 import { rgbDataURL } from "@/utils/rgbDataURL";
+import { CartState } from "@/store/features/cartSlice";
 
-export default function Index({navigation, colors, goods}: {navigation: NavigationState, colors: ColorsState, goods: GoodsState}) {
+export default function Index({navigation, colors, cart, goods}: {navigation: NavigationState, colors: ColorsState, cart: CartState, goods: GoodsState}) {
   const {list, page, pages, totalCount} = goods;
   const rgbData = rgbDataURL(200,200,200);
 
   return (
-    <MainContainer keywords={'main page'} navigation={navigation}>
+    <MainContainer keywords={'main page'} navigation={navigation} cart={cart} colors={colors}>
       <main className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>

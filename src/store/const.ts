@@ -1,5 +1,6 @@
 export const API_URL = 'https://lava-overjoyed-tern.glitch.me';
 export const GOODS_URL = `${API_URL}/api/goods`;
+export const CART_URL = `${API_URL}/api/cart`;
 export const CATEGOY_URL = `${API_URL}/api/categories`;
 export const COLORS_URL = `${API_URL}/api/colors`;
 export const ORDER_URL = `${API_URL}/api/order`;

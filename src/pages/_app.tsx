@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { fetchNavgation } from '@/store/features/navgationSlice';
 import { AppThunkDispatch } from '@/types/types';
 import { fetchColors } from '@/store/features/colorsSlice';
+import { fetchGetCart } from '@/store/features/cartSlice';
 
 export default function WrappedApp({Component, ...rest}: AppProps) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -12,6 +13,7 @@ export default function WrappedApp({Component, ...rest}: AppProps) {
   return (
     <Provider store={store}>
       <Component {...props.pageProps} />
+      <div id='modal-root'/>
     </Provider>
   )
 };
@@ -22,6 +24,7 @@ WrappedApp.getInitialProps = wrapper.getInitialAppProps(store => async (ctx) => 
   await Promise.all([
     dispatch(fetchNavgation()),
     dispatch(fetchColors()),
+    dispatch(fetchGetCart()),
   ])
   
   return {pageProps: {}};

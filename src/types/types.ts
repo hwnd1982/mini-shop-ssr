@@ -1,5 +1,6 @@
 import { Action, AnyAction, createAsyncThunk, Store, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+import { ParsedUrlQuery } from "querystring";
 
 export type DefaultComponentsProps = {[index: string]: string | number};
 export type AppDispatch = Store['dispatch'];
@@ -24,3 +25,5 @@ export interface FetchingState {
 }
 
 export const createAppAsyncThunk = createAsyncThunk.withTypes<ThunkApiConfig>();
+
+export type SearchParams = ParsedUrlQuery | null | undefined;

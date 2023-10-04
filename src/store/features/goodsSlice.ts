@@ -1,6 +1,5 @@
-import { FetchingState } from "@/types/types";
+import { FetchingState, SearchParams } from "@/types/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ParsedUrlQuery } from "querystring";
 import { GOODS_URL } from "../const";
 import { Product } from "./productSlice";
 
@@ -12,13 +11,11 @@ export interface GoodsState  extends FetchingState {
 }
 
 export interface GoodsPayload {
-  goods: Product[]
+  list: Product[]
   page: number
   pages: number
   totalCount: number
 }
-
-type SearchParams = ParsedUrlQuery | null;
 
 const initialState: GoodsState = {
     status: 'idle',
@@ -29,7 +26,7 @@ const initialState: GoodsState = {
     totalCount: 0,
   };
 
-export const fetchGoods = createAsyncThunk<GoodsPayload, SearchParams | undefined>(
+export const fetchGoods = createAsyncThunk<GoodsPayload, SearchParams>(
   "goods/fetchGoods",
   async (param = null) => {
     const url = new URL(GOODS_URL);
@@ -38,7 +35,7 @@ export const fetchGoods = createAsyncThunk<GoodsPayload, SearchParams | undefine
       url.searchParams.append(key, `${param[key]}`);
     }
     
-    return await (await fetch(url)).json();
+    return await (await fetch(url)).json();;
   }
 );
 
@@ -60,7 +57,7 @@ const goodsSlice = createSlice({
         state.totalCount = 0;
       })
       .addCase(fetchGoods.fulfilled, (state, action) => {
-        state.list = action.payload.goods || [];
+        state.list = action.payload.list || [];
         state.pages = action.payload.pages;
         state.page = action.payload.page;
         state.totalCount = action.payload.totalCount;

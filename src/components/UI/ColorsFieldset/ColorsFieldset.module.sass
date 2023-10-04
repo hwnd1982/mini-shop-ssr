@@ -1,9 +1,14 @@
+.fieldset
+  @apply relative gap-2 mb-4 flex justify-start flex-wrap
+
 .color
-  @apply w-5 h-5 transition-all rounded-full block ring-offset-1
+  @apply w-5 h-5  transition-all rounded-full block
+  &.selected
+    @apply ring-offset-2 ring-2
   &.black
     @apply bg-c-black ring-c-black
   &.white
-    @apply bg-c-white ring-c-white border border-slate-300
+    @apply bg-c-white ring-c-grey border border-c-grey
   &.red
     @apply bg-c-red ring-c-red
   &.green

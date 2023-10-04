@@ -5,7 +5,7 @@ import s from './ColorsList.module.sass'
 
 export default function ColorsList({product, colors}: {product: Product, colors: ColorsState}) {
   return (
-    <div className="relative gap-2 mb-4 flex justify-center">
+    <div className="relative gap-2 mb-4 flex justify-center flex-wrap">
       {product.colors.map(colorId => {
         const color = colors.list.find(color => color.id === colorId);
 
