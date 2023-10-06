@@ -1,6 +1,8 @@
 import { createAppAsyncThunk, FetchingState } from "@/types/types";
 import { createSlice} from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 import { CATEGOY_URL, getData } from "../const";
+import { AppState } from "../store";
 
 export type Category = {
   title: string
@@ -50,25 +52,30 @@ const navgationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(fetchNavgation.pending, (state) => {
-      state.status = 'loading';
-      state.list = {};
-      state.genderList = [];
-      state.error = '';
-    })
-    .addCase(fetchNavgation.fulfilled, (state, action) => {
-      const genderList: string[] = action?.payload ? Object.keys(action?.payload) : [];
+      .addCase(HYDRATE, (state, action: AppState) => {
+        state.list = action.payload.navgation;
+        state.status = 'success';
+        state.error = '';
+      })
+      .addCase(fetchNavgation.pending, (state) => {
+        state.status = 'loading';
+        state.list = {};
+        state.genderList = [];
+        state.error = '';
+      })
+      .addCase(fetchNavgation.fulfilled, (state, action) => {
+        const genderList: string[] = action?.payload ? Object.keys(action?.payload) : [];
 
-      state.status = 'success';
-      state.list = action?.payload || {};
-      state.genderList = genderList || [];
-      state.gender = state.gender || genderList[0];
-      state.error = '';
-    })
-    .addCase(fetchNavgation.rejected, (state, action) => {
-      state.status = 'failed',
-      state.error = action.error.message || '';
-    })
+        state.status = 'success';
+        state.list = action?.payload || {};
+        state.genderList = genderList || [];
+        state.gender = state.gender || genderList[0];
+        state.error = '';
+      })
+      .addCase(fetchNavgation.rejected, (state, action) => {
+        state.status = 'failed',
+        state.error = action.error.message || '';
+      });
   }
 });
 

@@ -10,3 +10,7 @@ const makeConfiguredStore: MakeStore<any> = () =>
   });
 
 export const wrapper = createWrapper<Store>(makeConfiguredStore, {debug: true});
+
+export type AppStore = ReturnType<typeof makeConfiguredStore>;
+export type AppState = ReturnType<AppStore['getState']>;
+export type AppDispatch = Store['dispatch'];

@@ -18,13 +18,13 @@ export default function Index({navigation, colors, cart, goods}: {navigation: Na
   const rgbData = rgbDataURL(200,200,200);
 
   return (
-    <MainContainer keywords={'main page'} navigation={navigation} cart={cart} colors={colors}>
+    <MainContainer keywords={'main page'} navigation={navigation} colors={colors}>
       <main className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>
             <Filter min={100} max={10000} colors={colors} navigation={navigation} />
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 pb-10">
-              {list.map((product) => (
+              {list.map((product, index) => (
                 <div key={product.id} className="grid grid-rows-[min-content_1fr]">
                   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                     <Image
@@ -32,7 +32,8 @@ export default function Index({navigation, colors, cart, goods}: {navigation: Na
                       height={600}
                       src={`${API_URL}/${product.pic}`}
                       alt={product.title}
-                      priority={true}
+                      priority={index < 8}
+                      loading={index > 7 ? 'lazy' : undefined}
                       placeholder="blur"
                       blurDataURL={rgbData}
                       className="h-full w-full object-cover object-top group-hover:opacity-75" />

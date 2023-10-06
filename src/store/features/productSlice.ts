@@ -1,6 +1,8 @@
 import { FetchingState } from "@/types/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 import { GOODS_URL } from "../const";
+import { AppState } from "../store";
 
 export interface Product {
   id: string,
@@ -41,6 +43,11 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      .addCase(HYDRATE, (state, action: AppState) => {
+        state.data = action.payload.product;
+        state.status = 'success';
+        state.error = '';
+      })
       .addCase(fetchProduct.pending, (state) => {
         state.status = "loading";
         state.data = null;

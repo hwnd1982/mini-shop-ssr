@@ -1,27 +1,47 @@
 import { MainContainer } from "@/components/MainContainer/MainContainer";
 import ColorsFieldset from "@/components/UI/ColorsFieldset/ColorsFieldset";
+import FeatchIcon from "@/components/UI/FeatchButton/FeatchIcon";
 import SizesFieldset from "@/components/UI/SizesFieldset/SizesFieldset";
 import { API_URL } from "@/store/const";
-import { CartState } from "@/store/features/cartSlice";
+import { fetchPostCart } from "@/store/features/cartSlice";
 import { ColorsState } from "@/store/features/colorsSlice";
 import { NavigationState } from "@/store/features/navgationSlice";
 import { fetchProduct, ProductState } from "@/store/features/productSlice";
-import { wrapper } from "@/store/store";
+import { AppState, wrapper } from "@/store/store";
 import { AppThunkDispatch } from "@/types/types";
+import { Disclosure } from "@headlessui/react";
+import { MinusCircleIcon, MinusSmallIcon, PlusIcon, PlusSmallIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export default ({navigation, colors, cart, product}: {navigation: NavigationState, colors: ColorsState, cart: CartState, product: ProductState}) => { 
+export default ({navigation, colors, product}: {navigation: NavigationState, colors: ColorsState, product: ProductState}) => { 
   const {data} = product;
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
+  const [addingToCart, setAddingToCart] = useState(false);
+  const dispatch:AppThunkDispatch = useDispatch();
+  const cartStatus = useSelector((state:AppState) => state.cart.status);
+
+  const addItem = () => {
+    if(product.data !== null && 'id' in product.data) {
+      setAddingToCart(true);
+      dispatch(fetchPostCart({id: product.data.id, color: selectedColor, size: selectedSize}))
+    }
+  };
+
+  useEffect(() => {
+    if(cartStatus !== 'loading') {
+      setAddingToCart(false);
+    }
+  }, [cartStatus]);
   
   if (data === null || 'message' in data) {
     return <div></div>
   }
 
   return (
-    <MainContainer keywords={data.title} navigation={navigation} cart={cart} colors={colors}>
+    <MainContainer keywords={data.title} navigation={navigation} colors={colors}>
       <section x-data="
         {
           productOne: true,
@@ -71,51 +91,46 @@ export default ({navigation, colors, cart, product}: {navigation: NavigationStat
                   </div>
                 </div>
                 <div className="mb-9 pt-5">
-                  <button onClick={() => {
-                    console.log(product);
-                  }} className="flex w-full items-center justify-center bg-black py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize}>
-                    Add to Beg
+                  <button onClick={addItem} className="flex w-full items-center justify-between bg-black py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize} >
+                    {addingToCart ? 
+                      <FeatchIcon className="h-[30px] w-[30px]" /> :
+                      <PlusIcon height={30} width={30} />
+                    }
+                    <span className="grow">Add to Beg</span>
                   </button>
                 </div>
-
-                <div className="mb-4 space-y-4" x-data="
-                    {
-                      tabOne: false,
-                      tabTwo: false
-                    }                
-                  ">
-                  <div className="border-b border-[#e7e7e7]">
-                    <button className="mb-4 flex w-full items-center justify-between text-left">
-                      <span className="text-base font-medium text-black">
-                        Shipping and Returns
-                      </span>
-                      <span className="text-xl font-medium text-black" x-text=" tabOne ? ' - ' : ' + ' "> + </span>
-                    </button>
-                    <div x-show="tabOne" style={{display: 'none'}}>
-                      <p className="mb-4 text-base font-medium text-body-color">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Earum animi pariatur hic fuga quidem labore repudiandae
-                        sequi, molestias provident quisquam!
-                      </p>
+                {product.data !== null && 'materials' in product.data &&
+                  <div className="mb-4 space-y-4">
+                    <div className="border-b border-[#e7e7e7]">
+                      <Disclosure>
+                        {({ open }) => (
+                          <>
+                            <Disclosure.Button className="mb-4 flex w-full items-center justify-between text-left">
+                              <span className="text-base font-medium text-black">
+                                Дополнительно:
+                              </span>
+                              <span className="text-xl font-medium text-black">
+                                {open ? 
+                                  <MinusSmallIcon height={25} width={25} /> :
+                                  <PlusSmallIcon height={25} width={25} />
+                                }
+                              </span>
+                            </Disclosure.Button>
+                            <Disclosure.Panel>
+                              <ul className="mb-4 text-base font-medium text-body-color">
+                                {
+                                  product.data !== null &&
+                                  'materials' in product.data &&
+                                  product.data.materials.split(',').map((item) => <li key={item}>{item}</li>)
+                                }
+                              </ul>
+                            </Disclosure.Panel>
+                          </>
+                        )}
+                      </Disclosure>
                     </div>
                   </div>
-
-                  <div className="border-b border-[#e7e7e7]">
-                    <button className="mb-4 flex w-full items-center justify-between text-left">
-                      <span className="text-base font-medium text-black">
-                        Details
-                      </span>
-                      <span className="text-xl font-medium text-black" x-text=" tabTwo ? ' - ' : ' + ' "> + </span>
-                    </button>
-                    <div x-show="tabTwo" style={{display: 'none'}}>
-                      <p className="mb-4 text-base font-medium text-body-color">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Earum animi pariatur hic fuga quidem labore repudiandae
-                        sequi, molestias provident quisquam!
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  }
               </div>
             </div>
           </div>
@@ -125,15 +140,6 @@ export default ({navigation, colors, cart, product}: {navigation: NavigationStat
     </MainContainer>
   )
 }
-
-// export const getServerSideProps = async ({params}) => {
-//   const response = await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`);
-//   const user = await response.json();
-
-//   return {
-//     props: {user}
-//   }
-// }
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   const state: {

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { NavigationState } from '@/store/features/navgationSlice';
@@ -8,16 +8,20 @@ import ActualPanelShadow from './ActualPanelShadow/ActualPanelShadow';
 import Banner from './Banner/Banner';
 import Nav from './Nav/Nav';
 import CartModal from '../CartModal/CartModal';
-import { CartState } from '@/store/features/cartSlice';
+import { CartState, openCart } from '@/store/features/cartSlice';
 import { ColorsState } from '@/store/features/colorsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from '@/store/store';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header(props: {navigation: NavigationState, cart: CartState, colors: ColorsState}) {
+export default function Header(props: {navigation: NavigationState, colors: ColorsState}) {
   const [open, setOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const cart = useSelector((state: AppState) => state.cart);
+  const dispatch = useDispatch();
+  const openModal = () => dispatch(openCart(true));
 
   return (
     <header className="bg-white relative z-50">
@@ -107,13 +111,13 @@ export default function Header(props: {navigation: NavigationState, cart: CartSt
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <button type='button' onClick={() => setIsCartOpen(true)} className="group -m-2 flex items-center p-2">
+                  <button type='button' onClick={openModal} className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    {!!props.cart.totalCount &&
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{props.cart.totalCount}</span>
+                    {!!cart.totalCount &&
+                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart.totalCount}</span>
                     }
                     <span className="sr-only">items in cart, view bag</span>
                   </button>
@@ -123,7 +127,7 @@ export default function Header(props: {navigation: NavigationState, cart: CartSt
           </div>
         </nav>
       </div>
-      <CartModal isOpen={isCartOpen} setIsOpen={setIsCartOpen} cart={props.cart} colors={props.colors}/>
+      <CartModal cart={cart} colors={props.colors}/>
     </header>
   )
 }

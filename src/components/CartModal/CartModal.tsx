@@ -1,21 +1,24 @@
-import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { CartState } from '@/store/features/cartSlice';
+import { CartState, openCart } from '@/store/features/cartSlice';
 import CartItem from './CartItem/CartItem';
 import { ColorsState } from '@/store/features/colorsSlice';
+import { useDispatch } from 'react-redux';
 
-export default function CartModal({isOpen, setIsOpen, cart, colors}: {
-  isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-  cart: CartState, colors: ColorsState
+export default function CartModal({cart, colors}: {
+  cart: CartState
+  colors: ColorsState
 }) {
+  const dispatch = useDispatch();
+  const closeModal = () => dispatch(openCart(false));
+  
   return (
     <Transition
-      show={isOpen}
+      show={cart.opened}
       as={Fragment}
     >
-      <Dialog onClose={() => setIsOpen(false)} className="relative z-50">
+      <Dialog onClose={closeModal} className="relative z-50">
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -28,7 +31,7 @@ export default function CartModal({isOpen, setIsOpen, cart, colors}: {
           <div
             className="fixed inset-0 bg-black/30 opacity-100 backdrop-blur-[.5px]"
             aria-hidden="true"
-            onClick={() => setIsOpen(false)}
+            onClick={closeModal}
           ></div>
         </Transition.Child>
         <Transition.Child
@@ -46,7 +49,7 @@ export default function CartModal({isOpen, setIsOpen, cart, colors}: {
               <Dialog.Title>Завершите свой заказ</Dialog.Title>
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">Корзина</p>
-                <button aria-label="Close cart" onClick={() => setIsOpen(false)}>
+                <button aria-label="Close cart" onClick={closeModal}>
                   <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
                     <XMarkIcon className="h-6 transition-all ease-in-out hover:scale-110" />
                   </div>
@@ -60,8 +63,9 @@ export default function CartModal({isOpen, setIsOpen, cart, colors}: {
 
                     return <CartItem
                       key={`${item.id}-${item.color}-${item.size}`}
-                      product={{...item, ...product, color}}
-                      onClickToProductLink={() => setIsOpen(false)}
+                      product={{...item, ...product, colorTitle: color}}
+                      cartStatus={cart.status} 
+                      closeModal={closeModal}
                     />
                   })}
                 </ul>
@@ -73,7 +77,7 @@ export default function CartModal({isOpen, setIsOpen, cart, colors}: {
                   </p>
                 </div>
                 </div>
-                <a href="https://dev-vercel-shop.myshopify.com/cart/c/c1-7b82c5e14812365f540f6b2aabc8bbb4" className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">Proceed to Checkout</a>
+                <a href="#" className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">Proceed to Checkout</a>
               </div>
               
             {/* </Dialog.Panel> */}

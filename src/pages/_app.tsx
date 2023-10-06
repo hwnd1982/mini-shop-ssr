@@ -13,7 +13,6 @@ export default function WrappedApp({Component, ...rest}: AppProps) {
   return (
     <Provider store={store}>
       <Component {...props.pageProps} />
-      <div id='modal-root'/>
     </Provider>
   )
 };

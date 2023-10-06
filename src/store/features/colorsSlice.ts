@@ -1,6 +1,8 @@
 import { createAppAsyncThunk, FetchingState } from "@/types/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 import { COLORS_URL, getData } from "../const";
+import { AppState } from "../store";
 
 export interface Color {
   id: number;
@@ -29,6 +31,11 @@ const colorsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+    .addCase(HYDRATE, (state, action: AppState) => {
+      state.list = action.payload.colors.list;
+      state.status = 'success';
+      state.error = '';
+    })
     .addCase(fetchColors.pending, (state) => {
       state.status = 'loading';
       state.list = [];

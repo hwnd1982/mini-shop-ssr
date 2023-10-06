@@ -11,13 +11,11 @@ export const MainContainer = ({
   keywords = '', 
   navigation,
   colors,
-  cart
 }: {
   children: ReactNode
   keywords: string
   colors: ColorsState
   navigation: NavigationState
-  cart: CartState
 }) => {
   return (
     <>
@@ -26,7 +24,7 @@ export const MainContainer = ({
       <title>Главная страница</title>
     </Head>
     <div>
-      <Header navigation={navigation} cart={cart} colors={colors}/>
+      <Header navigation={navigation} colors={colors}/>
       {children}
     </div>
     </>
