@@ -3,14 +3,14 @@ import ColorsFieldset from "@/components/UI/ColorsFieldset/ColorsFieldset";
 import FeatchIcon from "@/components/UI/FeatchButton/FeatchIcon";
 import SizesFieldset from "@/components/UI/SizesFieldset/SizesFieldset";
 import { API_URL } from "@/store/const";
-import { fetchPostCart } from "@/store/features/cartSlice";
+import { CartItem, fetchPostCart, openCart } from "@/store/features/cartSlice";
 import { ColorsState } from "@/store/features/colorsSlice";
 import { NavigationState } from "@/store/features/navgationSlice";
 import { fetchProduct, ProductState } from "@/store/features/productSlice";
 import { AppState, wrapper } from "@/store/store";
-import { AppThunkDispatch } from "@/types/types";
+import { AppThunkDispatch, AppDispatch } from "@/types/types";
 import { Disclosure } from "@headlessui/react";
-import { MinusCircleIcon, MinusSmallIcon, PlusIcon, PlusSmallIcon } from "@heroicons/react/24/outline";
+import { MinusSmallIcon, PlusIcon, PlusSmallIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,8 +20,9 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [addingToCart, setAddingToCart] = useState(false);
-  const dispatch:AppThunkDispatch = useDispatch();
-  const cartStatus = useSelector((state:AppState) => state.cart.status);
+  const [inCart, setInCart] = useState(0);
+  const dispatch:AppThunkDispatch & AppDispatch = useDispatch();
+  const cart = useSelector((state:AppState) => state.cart);
 
   const addItem = () => {
     if(product.data !== null && 'id' in product.data) {
@@ -30,11 +31,25 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
     }
   };
 
+  const openModal = () => dispatch(openCart(true));
+
   useEffect(() => {
-    if(cartStatus !== 'loading') {
+    if(cart.status !== 'loading') {
       setAddingToCart(false);
     }
-  }, [cartStatus]);
+  }, [cart.status]);
+
+  useEffect(() => {
+    if (data !== null && 'id' in data) {
+      const item = cart.list.find(({id, color, size}: CartItem) => (
+        id === data.id &&
+        color === selectedColor &&
+        size === selectedSize
+      ));
+
+      setInCart(item ? item.count : 0);
+    }
+  }, [selectedColor, selectedSize, cart])
   
   if (data === null || 'message' in data) {
     return <div></div>
@@ -91,15 +106,26 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
                   </div>
                 </div>
                 <div className="mb-9 pt-5">
-                  <button onClick={addItem} className="flex w-full items-center justify-between bg-black py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize} >
-                    {addingToCart ? 
-                      <FeatchIcon className="h-[30px] w-[30px]" /> :
-                      <PlusIcon height={30} width={30} />
-                    }
-                    <span className="grow">Add to Beg</span>
-                  </button>
+                  {inCart ?
+                    <button onClick={openModal} className="flex w-full items-center justify-between bg-black py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize} >
+                      <div className="relative">
+                        <ShoppingBagIcon
+                          className="h-[30px] w-[30px]"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <span className="grow">{inCart} in Beg</span>
+                    </button> :
+                    <button onClick={addItem} className="flex w-full items-center justify-between bg-black py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize} >
+                      {addingToCart ? 
+                        <FeatchIcon className="h-[30px] w-[30px]" /> :
+                        <PlusIcon height={30} width={30} />
+                      }
+                      <span className="grow">Add to Beg</span>
+                    </button>
+                  }
                 </div>
-                {product.data !== null && 'materials' in product.data &&
+                {data !== null && 'materials' in data &&
                   <div className="mb-4 space-y-4">
                     <div className="border-b border-[#e7e7e7]">
                       <Disclosure>
@@ -119,9 +145,9 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
                             <Disclosure.Panel>
                               <ul className="mb-4 text-base font-medium text-body-color">
                                 {
-                                  product.data !== null &&
-                                  'materials' in product.data &&
-                                  product.data.materials.split(',').map((item) => <li key={item}>{item}</li>)
+                                  data !== null &&
+                                  'materials' in data &&
+                                  data.materials.split(',').map((item) => <li key={item} className="font-normal pl-4">{item}</li>)
                                 }
                               </ul>
                             </Disclosure.Panel>

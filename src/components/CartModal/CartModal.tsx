@@ -5,6 +5,8 @@ import { CartState, openCart } from '@/store/features/cartSlice';
 import CartItem from './CartItem/CartItem';
 import { ColorsState } from '@/store/features/colorsSlice';
 import { useDispatch } from 'react-redux';
+import s from './CartModal.module.sass';
+import clsx from 'clsx';
 
 export default function CartModal({cart, colors}: {
   cart: CartState
@@ -56,7 +58,7 @@ export default function CartModal({cart, colors}: {
                 </button>
               </div>
               <div className="flex grow flex-col justify-between overflow-hidden p-1">
-                <ul className="grow overflow-auto py-4">
+                <ul className={clsx("grow overflow-auto py-4 pr-3", s.cartList)}>
                   {cart.list.map(item => {
                     const product = cart.products[item.id];
                     const color = colors.list.find(color => color.id === item.color)?.title || '';

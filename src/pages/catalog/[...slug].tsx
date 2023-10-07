@@ -11,8 +11,14 @@ import Filter from "@/components/UI/Filter/Filter";
 import ColorsList from "@/components/UI/ColorsList/ColorsList";
 import Image from "next/image";
 import { rgbDataURL } from "@/utils/rgbDataURL";
+import { CartState } from "@/store/features/cartSlice";
+import { filterParams } from "@/utils/filterParams";
 
-export default function Index({navigation, colors, goods}: {navigation: NavigationState, colors: ColorsState, goods: GoodsState}) {
+export default function Catalog({navigation, colors, goods}: {
+  navigation: NavigationState
+  colors: ColorsState
+  goods: GoodsState
+}) {
   const {list, page, pages, totalCount} = goods;
   const rgbData = rgbDataURL(200,200,200);
 
@@ -21,7 +27,7 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
       <main className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>
-            <Filter min={100} max={10000} colors={colors} navigation={navigation} />
+            <Filter min={100} max={10000} colors={colors} />
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 pb-10">
               {list.map((product, index) => (
                 <div key={product.id} className="grid grid-rows-[min-content_1fr]">
@@ -49,7 +55,7 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
 
                     <ColorsList product={product} colors={colors} />
 
-                    <Link href={`products/${product.id}`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
+                    <Link href={`/products/${product.id}`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
                         Shop Now
                     </Link>
                   </div>
@@ -65,12 +71,17 @@ export default function Index({navigation, colors, goods}: {navigation: Navigati
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
   const dispatch:AppThunkDispatch = store.dispatch;
-  
+  const [gender, category] = ctx?.params?.slug ?
+    Array.isArray(ctx.params.slug) ?
+      ctx.params.slug : [ctx.params.slug] : [];
+  const query = filterParams({...ctx.query, gender, category}, ['slug']);
+
+
   ctx.res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
   );
-
-  await dispatch(fetchGoods(ctx.query));
-  return ({props:store.getState()})
+  
+  await dispatch(fetchGoods(query));
+  return ({props: store.getState()})
 });

@@ -1,10 +1,10 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Color } from '@/store/features/colorsSlice'
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { ArrowSmallDownIcon, ArrowSmallUpIcon, ArrowsUpDownIcon, CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import s from './PriceListbox.module.sass';
 import clsx from 'clsx';
-import DoubleRangeSlider, { DoubleRangeProps } from '../DoubleRangeSlider/DoubleRangeSlider';
+import DoubleRangeSlider, { DoubleRangeProps } from './DoubleRangeSlider/DoubleRangeSlider';
 
 
 
@@ -24,6 +24,18 @@ export default function PriceListbox({className = '', range, min, max, unit, ste
                 aria-hidden="true"
               />
             </span>
+            {(range.max !== max || range.min !== min) &&
+              <span className='absolute top-0 right-0 flex items-center justify-center translate-y-[-50%] translate-x-[50%] rounded-full bg-indigo-300 rounded shadow-[rgba(87,13,248,.5)_inset_0_0_5px_1px] w-6 h-6 leading-6 text-center text-gray-600 text-sm'>
+                {range.max !== max && range.min === min &&
+                  <ArrowSmallUpIcon className="h-5 w-5" />
+                }
+                {range.max === max && range.min !== min &&
+                  <ArrowSmallDownIcon className="h-5 w-5" />
+                }
+                {range.max !== max && range.min !== min &&
+                  <ArrowsUpDownIcon className="h-5 w-5" />
+                }
+              </span>}
           </Listbox.Button>
           <Transition
             as={Fragment}

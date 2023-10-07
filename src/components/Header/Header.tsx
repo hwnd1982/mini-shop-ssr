@@ -8,7 +8,7 @@ import ActualPanelShadow from './ActualPanelShadow/ActualPanelShadow';
 import Banner from './Banner/Banner';
 import Nav from './Nav/Nav';
 import CartModal from '../CartModal/CartModal';
-import { CartState, openCart } from '@/store/features/cartSlice';
+import { openCart } from '@/store/features/cartSlice';
 import { ColorsState } from '@/store/features/colorsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '@/store/store';
@@ -52,7 +52,7 @@ export default function Header(props: {navigation: NavigationState, colors: Colo
                 <div className="flex h-full space-x-8">
                   {props.navigation.genderList.map((gender) => (
                     <Popover key={`${gender}-header-nav`} className="flex">
-                      {({ open }) => (
+                      {({ open, close }) => (
                         <>
                           <div className="relative flex">
                             <Popover.Button
@@ -87,10 +87,11 @@ export default function Header(props: {navigation: NavigationState, colors: Colo
                                       imgSrc={props.navigation.list[gender].banner.bg.desktop}
                                       title={props.navigation.list[gender].banner.description}
                                     />
-                                    <Nav gender={gender} list={props.navigation.list[gender].list}/>
+                                    <Nav gender={gender} list={props.navigation.list[gender].list} onClick={close} />
                                   </div>
                                 </div>
                               </div>
+
                             </Popover.Panel>
                           </Transition>
                         </>

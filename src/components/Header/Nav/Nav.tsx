@@ -1,11 +1,13 @@
-import { DefaultComponentsProps } from '@/types/types'
+import { ClickHandler, DefaultComponentsProps } from '@/types/types'
+import Link from 'next/link'
 
 type NavProps = {
   gender: string,
   list: DefaultComponentsProps[]
+  onClick: ClickHandler
 }
 
-export default function Nav({gender, list}: NavProps) {
+export default function Nav({gender, list, onClick}: NavProps) {
   return (
     <div className="row-start-1 gap-y-10 text-sm">
       <ul
@@ -15,9 +17,9 @@ export default function Nav({gender, list}: NavProps) {
       >
         {list.map((item) => (
           <li key={`${item.title}-nav`} className="flex">
-            <a href={item.slug.toString() || '#'} className="hover:text-gray-800">
+            <Link href={`/catalog/${gender}/${item.slug.toString()}`} onClick={onClick} className="hover:text-gray-800">
               {item.title}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

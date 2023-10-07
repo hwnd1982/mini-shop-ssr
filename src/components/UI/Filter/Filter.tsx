@@ -5,12 +5,18 @@ import { getSearchParams } from '@/utils/getSearchParams';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react'
-import CategoriesListbox from '../UI/CategoriesListbox/CategoriesListbox';
-import ColorListbox from '../UI/ColorsListbox/ColorsListbox'
-import PriceListbox from '../UI/PriceListbox/PriceListbox';
+import CategoriesListbox from './CategoriesListbox/CategoriesListbox';
+import ColorListbox from './ColorsListbox/ColorsListbox'
+import PriceListbox from './PriceListbox/PriceListbox';
 
-export default function Filter({max, min, colors, navigation}: {max: number, min: number, colors: ColorsState, navigation: NavigationState}) {
-  const {query} = useRouter();
+export default function Filter({max, min, colors, navigation}: {
+  max: number
+  min: number
+  colors: ColorsState
+  navigation?: NavigationState
+}) {
+  const {query, asPath} = useRouter();
+  const [baseUrl] = asPath.split('?');
   const except = ['page'];
   const searchParams = getSearchParams(query, except);
   const {
@@ -23,7 +29,7 @@ export default function Filter({max, min, colors, navigation}: {max: number, min
     selectedCategories,
     setSelectedCategories
 } = useFiltersParams({query, max, min});
-
+  
   return (
     <div className="mb-10 rounded-lg border border-[#e7e7e7] bg-[#f4f7ff] p-5">
       <div className="-mx-4 flex flex-wrap sm:flex-nowrap items-center justify-between">
@@ -34,11 +40,11 @@ export default function Filter({max, min, colors, navigation}: {max: number, min
               selectedColors={selectedColors}
               setSelectedColors={setSelectedColors} 
             />
-            <CategoriesListbox 
+            {!!navigation && <CategoriesListbox 
               navigation={navigation}
               selectedCategories={selectedCategories}
               setSelectedCategories={setSelectedCategories}
-            />
+            />}
             <PriceListbox
               range={priceRange}
               min={min}
@@ -51,13 +57,13 @@ export default function Filter({max, min, colors, navigation}: {max: number, min
         </div>
         <div className="px-4 shrink-0">
         { searchParams.toString() !== filters &&
-          <Link href={`/?${filters}`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
+          <Link href={`${baseUrl || '/'}?${filters}`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
           Apply Filters
           </Link>
         }
           
         { !!filters && searchParams.toString() === filters &&
-          <Link onClick={resetFilters} href={`/`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
+          <Link onClick={resetFilters} href={baseUrl || '/'} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
           Reset Filters
           </Link>
         }

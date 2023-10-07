@@ -9,7 +9,7 @@ const makeConfiguredStore: MakeStore<any> = () =>
     devTools: true,
   });
 
-export const wrapper = createWrapper<Store>(makeConfiguredStore, {debug: true});
+export const wrapper = createWrapper<Store>(makeConfiguredStore);
 
 export type AppStore = ReturnType<typeof makeConfiguredStore>;
 export type AppState = ReturnType<AppStore['getState']>;

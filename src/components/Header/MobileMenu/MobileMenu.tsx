@@ -3,6 +3,7 @@ import { Dialog, Tab, Transition } from '@headlessui/react'
 import {  XMarkIcon } from '@heroicons/react/24/outline'
 import { NavigationState } from '@/store/features/navgationSlice'
 import MobileBanner from './MobileBanner/MobileBanner'
+import Link from 'next/link'
 
 type MobileMenuProps = {
   open: boolean,
@@ -84,9 +85,9 @@ export default function MobileMenu({open, setOpen, navigation, classNames}:Mobil
                           >
                             {navigation.list[gender].list.map((item) => (
                               <li key={item.title} className="flow-root">
-                                <a href={`categories/${item.slug}`} className="-m-2 block p-2 text-gray-500">
+                                <Link href={`/catalog/${gender}/${item.slug.toString()}`} className="-m-2 block p-2 text-gray-500">
                                   {item.title}
-                                </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>

@@ -1,6 +1,7 @@
 import { API_URL } from '@/store/const';
 import { DefaultComponentsProps } from '@/types/types';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Banner({productId, imgSrc, title}: DefaultComponentsProps) {
   return (
@@ -16,10 +17,10 @@ export default function Banner({productId, imgSrc, title}: DefaultComponentsProp
             priority={true}
             />
           </div>
-          <a href={`/products/${productId}`} className="mt-6 block font-medium text-gray-900">
+          <Link href={`/products/${productId}`} className="mt-6 block font-medium text-gray-900">
             <span className="absolute inset-0 z-10" aria-hidden="true" />
             {title}
-          </a>
+          </Link>
         </div>
     </div>
   )

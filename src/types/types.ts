@@ -1,10 +1,12 @@
 import { Action, AnyAction, createAsyncThunk, Store, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 import { ParsedUrlQuery } from "querystring";
+import { MouseEventHandler } from "react";
 
 export type DefaultComponentsProps = {[index: string]: string | number};
 export type AppDispatch = Store['dispatch'];
 export type RootState = ReturnType<Store['getState']>;
+export type ClickHandler = MouseEventHandler<HTMLAnchorElement>
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
