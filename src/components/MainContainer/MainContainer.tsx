@@ -3,7 +3,6 @@ import {ReactNode} from 'react';
 import Head from "next/head";
 import Header from '../Header/Header';
 import { NavigationState } from '@/store/features/navgationSlice';
-import { CartState } from '@/store/features/cartSlice';
 import { ColorsState } from '@/store/features/colorsSlice';
 
 export const MainContainer = ({
