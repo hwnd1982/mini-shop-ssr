@@ -31,11 +31,7 @@ export const useFiltersParams = ({min, max}: {min: number, max: number}) => {
     if(!searchParams.toString()) {
       resetFilters();
     }
-  }, [searchParams.toString()])
-
-  useEffect(() => {
-    resetFilters();
-  }, [baseUrl])
+  }, [baseUrl, searchParams.toString()])
 
   useEffect(() => {
     const filters = getSearchParams(query, except);
