@@ -1,12 +1,10 @@
 import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { Dialog, Disclosure, Transition } from '@headlessui/react';
+import { ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { CartState, openCart } from '@/store/features/cartSlice';
 import CartItem from './CartItem/CartItem';
 import { ColorsState } from '@/store/features/colorsSlice';
 import { useDispatch } from 'react-redux';
-import s from './CartModal.module.sass';
-import clsx from 'clsx';
 
 export default function CartModal({cart, colors}: {
   cart: CartState
@@ -49,7 +47,7 @@ export default function CartModal({cart, colors}: {
             {/* <Dialog.Panel> */}
               
               <Dialog.Title>Завершите свой заказ</Dialog.Title>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-4">
                 <p className="text-lg font-semibold">Корзина</p>
                 <button aria-label="Close cart" onClick={closeModal}>
                   <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
@@ -58,7 +56,7 @@ export default function CartModal({cart, colors}: {
                 </button>
               </div>
               <div className="flex grow flex-col justify-between overflow-hidden p-1">
-                <ul className={clsx("grow overflow-auto py-4 pr-3", s.cartList)}>
+                <ul className="grow overflow-auto py-4 pr-3 scroll">
                   {cart.list.map(item => {
                     const product = cart.products[item.id];
                     const color = colors.list.find(color => color.id === item.color)?.title || '';
@@ -79,9 +77,23 @@ export default function CartModal({cart, colors}: {
                   </p>
                 </div>
                 </div>
-                <a href="#" className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">Proceed to Checkout</a>
+                {/* <a href="#" className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">Proceed to Checkout</a> */}
+                <Disclosure>
+                  {({ open }) => (
+                    <>
+                      <Disclosure.Button className="flex w-full justify-between rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">
+                        <span>Оформить заказ</span>
+                        <ChevronUpIcon className={`${ open ? 'rotate-180 transform' : ''} h-5 w-5`} />
+                      </Disclosure.Button>
+
+                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                          Здесь будет форма...
+                        </Disclosure.Panel>
+
+                    </>
+                  )}
+                </Disclosure>
               </div>
-              
             {/* </Dialog.Panel> */}
           </div>
         </Transition.Child>

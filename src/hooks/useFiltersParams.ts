@@ -1,11 +1,12 @@
 import { getSearchParams } from "@/utils/getSearchParams";
-import { ParsedUrlQuery } from "querystring";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export const useFiltersParams = ({query, min, max}: {query: ParsedUrlQuery, min: number, max: number}) => {
+export const useFiltersParams = ({min, max}: {min: number, max: number}) => {
   const except = ['page'];
+  const {query, asPath} = useRouter();
+  const [baseUrl] = asPath.split('?');
   const searchParams = getSearchParams(query, except);
-
   const [filters, setFilters] = useState<string>(searchParams.toString());
   const [priceRange, setPriceRange] = useState({
     min: +(searchParams.get('min') || min),
@@ -19,16 +20,26 @@ export const useFiltersParams = ({query, min, max}: {query: ParsedUrlQuery, min:
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     categoriesParam ? Array.isArray(categoriesParam) ? categoriesParam : categoriesParam.split(',') : []
   );
-  
+
   const resetFilters = () => {
     setPriceRange({max, min});
     setSelectedColors([]);
-    setSelectedCategories([])
+    setSelectedCategories([]);
   }
 
   useEffect(() => {
-    const filters = getSearchParams(query, except);
+    if(!searchParams.toString()) {
+      resetFilters();
+    }
+  }, [searchParams.toString()])
 
+  useEffect(() => {
+    resetFilters();
+  }, [baseUrl])
+
+  useEffect(() => {
+    const filters = getSearchParams(query, except);
+    
     if(priceRange.max !== max) {
       filters.set('maxprice',  priceRange.max.toString());
     } else {
@@ -54,9 +65,11 @@ export const useFiltersParams = ({query, min, max}: {query: ParsedUrlQuery, min:
     }
 
     setFilters(filters.toString())
-  }, [selectedCategories, selectedColors, priceRange])
+  }, [selectedCategories, selectedColors, priceRange, filters])
 
   return {
+    baseUrl,
+    searchParams: searchParams.toString(),
     filters,
     resetFilters,
     priceRange,

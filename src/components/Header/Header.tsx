@@ -103,22 +103,22 @@ export default function Header(props: {navigation: NavigationState, colors: Colo
 
               <div className="ml-auto flex items-center">
                 {/* Search */}
-                <div className="flex lg:ml-6">
+                {/* <div className="flex lg:ml-6">
                   <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
                   </a>
-                </div>
+                </div> */}
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <button type='button' onClick={openModal} className="group -m-2 flex items-center p-2">
+                  <button type='button' onClick={openModal} className="relative group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
                     {!!cart.totalCount &&
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart.totalCount}</span>
+                      <span className="absolute top-2 right-2 translate-y-[-50%] translate-x-[50%] rounded-full bg-indigo-300 rounded shadow-[rgba(87,13,248,.5)_inset_0_0_5px_1px] w-6 leading-6 text-center text-gray-600 text-sm">{cart.totalCount}</span>
                     }
                     <span className="sr-only">items in cart, view bag</span>
                   </button>

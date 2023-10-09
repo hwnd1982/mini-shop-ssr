@@ -1,9 +1,7 @@
 import { useFiltersParams } from '@/hooks/useFiltersParams'
 import { ColorsState } from '@/store/features/colorsSlice';
 import { NavigationState } from '@/store/features/navgationSlice';
-import { getSearchParams } from '@/utils/getSearchParams';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react'
 import CategoriesListbox from './CategoriesListbox/CategoriesListbox';
 import ColorListbox from './ColorsListbox/ColorsListbox'
@@ -15,20 +13,17 @@ export default function Filter({max, min, colors, navigation}: {
   colors: ColorsState
   navigation?: NavigationState
 }) {
-  const {query, asPath} = useRouter();
-  const [baseUrl] = asPath.split('?');
-  const except = ['page'];
-  const searchParams = getSearchParams(query, except);
   const {
+    baseUrl,
     filters,
-    resetFilters,
+    searchParams,
     selectedColors,
     setSelectedColors,
     priceRange,
     setPriceRange,
     selectedCategories,
     setSelectedCategories
-} = useFiltersParams({query, max, min});
+} = useFiltersParams({max, min});
   
   return (
     <div className="mb-10 rounded-lg border border-[#e7e7e7] bg-[#f4f7ff] p-5">
@@ -56,15 +51,15 @@ export default function Filter({max, min, colors, navigation}: {
           </div>
         </div>
         <div className="px-4 shrink-0">
-        { searchParams.toString() !== filters &&
+        { searchParams !== filters &&
           <Link href={`${baseUrl || '/'}?${filters}`} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
-          Apply Filters
+          Применить фильтры
           </Link>
         }
           
-        { !!filters && searchParams.toString() === filters &&
-          <Link onClick={resetFilters} href={baseUrl || '/'} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
-          Reset Filters
+        { !!filters && searchParams === filters &&
+          <Link href={baseUrl || '/'} className="inline-flex items-center justify-center rounded-md border border-black py-2 px-5 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white">
+          Сбросить фильтры
           </Link>
         }
         </div>

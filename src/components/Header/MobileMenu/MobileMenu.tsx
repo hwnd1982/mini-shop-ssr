@@ -85,7 +85,7 @@ export default function MobileMenu({open, setOpen, navigation, classNames}:Mobil
                           >
                             {navigation.list[gender].list.map((item) => (
                               <li key={item.title} className="flow-root">
-                                <Link href={`/catalog/${gender}/${item.slug.toString()}`} className="-m-2 block p-2 text-gray-500">
+                                <Link href={`/catalog/${gender}/${item.slug.toString()}`} onClick={() => setOpen(false)} className="-m-2 block p-2 text-gray-500">
                                   {item.title}
                                 </Link>
                               </li>

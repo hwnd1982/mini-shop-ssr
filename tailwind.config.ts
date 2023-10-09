@@ -36,9 +36,9 @@ const config: Config = {
     },
   },
   plugins: [
-    require('@tailwindcss/aspect-ratio'),
     // Or with a custom prefix:
-    require('@headlessui/tailwindcss')({ prefix: 'ui' })
+    require('@headlessui/tailwindcss')({ prefix: 'ui' }),
+    require('@tailwindcss/aspect-ratio'),
   ],
 }
 

@@ -5,7 +5,7 @@ import s from './ColorsFieldset.module.sass'
 
 export default function ColorsFieldset({productColors, colors, selectedColor, setSelectedColor}: {productColors: number[], colors: ColorsState, selectedColor: number, setSelectedColor: Dispatch<SetStateAction<number>>}) {
   return (
-    <fieldset className={s.fieldset}>
+    <fieldset className="relative gap-2 mb-4 flex justify-start flex-wrap">
       {productColors.map(colorId => {
         const color = colors.list.find(color => color.id === colorId);
 

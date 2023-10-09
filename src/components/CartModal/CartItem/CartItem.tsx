@@ -1,7 +1,7 @@
 import FeatchIcon from '@/components/UI/FeatchButton/FeatchIcon'
 import { API_URL } from '@/store/const'
 import { fetchDelCart, fetchPatchCart, openCart } from '@/store/features/cartSlice'
-import { AppDispatch, AppThunkDispatch } from '@/types/types'
+import { AppThunkDispatch } from '@/types/types'
 import { MinusSmallIcon, PlusSmallIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
