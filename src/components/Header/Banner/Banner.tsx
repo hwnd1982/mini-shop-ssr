@@ -1,9 +1,14 @@
 import { API_URL } from '@/store/const';
-import { DefaultComponentsProps } from '@/types/types';
+import { ClickHandler } from '@/types/types';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Banner({productId, imgSrc, title}: DefaultComponentsProps) {
+export default function Banner({productId, imgSrc, title, onClick}: {
+  productId: string
+  imgSrc: string
+  title: string
+  onClick: ClickHandler
+}) {
   return (
     <div className="col-start-2 col-span-3 grid">
       <div className="group relative text-base sm:text-sm">
@@ -17,7 +22,7 @@ export default function Banner({productId, imgSrc, title}: DefaultComponentsProp
             priority={true}
             />
           </div>
-          <Link href={`/products/${productId}`} className="mt-6 block font-medium text-gray-900">
+          <Link href={`/products/${productId}`} onClick={onClick} className="mt-6 block font-medium text-gray-900">
             <span className="absolute inset-0 z-10" aria-hidden="true" />
             {title}
           </Link>

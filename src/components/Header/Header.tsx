@@ -1,6 +1,6 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { NavigationState } from '@/store/features/navgationSlice';
 import MobileMenu from './MobileMenu/MobileMenu';
 import Logo from './Logo/Logo';
@@ -17,20 +17,20 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header(props: {navigation: NavigationState, colors: ColorsState}) {
+export default function Header({navigation, colors}: {navigation: NavigationState, colors: ColorsState}) {
   const [open, setOpen] = useState(false);
   const cart = useSelector((state: AppState) => state.cart);
   const dispatch = useDispatch();
   const openModal = () => dispatch(openCart(true));
-
+  
   return (
-    <header className="bg-white relative z-50">
+    <header className="relative z-50">
       {/* Mobile menu */}
-      {props?.navigation ?
-        <MobileMenu open={open} setOpen={setOpen} navigation={props.navigation} classNames={classNames}/> : ''
+      {navigation ?
+        <MobileMenu open={open} setOpen={setOpen} navigation={navigation} classNames={classNames}/> : ''
       }
 
-      <div className="relative bg-white ">
+      <div className="relative bg-white">
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
@@ -50,7 +50,7 @@ export default function Header(props: {navigation: NavigationState, colors: Colo
               {/* Flyout menus */}
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
-                  {props.navigation.genderList.map((gender) => (
+                  {navigation.genderList.map((gender) => (
                     <Popover key={`${gender}-header-nav`} className="flex">
                       {({ open, close }) => (
                         <>
@@ -63,7 +63,7 @@ export default function Header(props: {navigation: NavigationState, colors: Colo
                                 'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
                               )}
                             >
-                              {props.navigation.list[gender].title}
+                              {navigation.list[gender].title}
                             </Popover.Button>
                           </div>
 
@@ -83,11 +83,12 @@ export default function Header(props: {navigation: NavigationState, colors: Colo
                                 <div className="mx-auto max-w-7xl px-8">
                                   <div className="grid grid-cols-4 gap-x-8 gap-y-10 py-16">
                                     <Banner 
-                                      productId={props.navigation.list[gender].banner.id}
-                                      imgSrc={props.navigation.list[gender].banner.bg.desktop}
-                                      title={props.navigation.list[gender].banner.description}
+                                      productId={navigation.list[gender].banner.id}
+                                      imgSrc={navigation.list[gender].banner.bg.desktop}
+                                      title={navigation.list[gender].banner.description}
+                                      onClick={close}
                                     />
-                                    <Nav gender={gender} list={props.navigation.list[gender].list} onClick={close} />
+                                    <Nav gender={gender} list={navigation.list[gender].list} onClick={close} />
                                   </div>
                                 </div>
                               </div>
@@ -128,7 +129,7 @@ export default function Header(props: {navigation: NavigationState, colors: Colo
           </div>
         </nav>
       </div>
-      <CartModal cart={cart} colors={props.colors}/>
+      <CartModal cart={cart} colors={colors}/>
     </header>
   )
 }

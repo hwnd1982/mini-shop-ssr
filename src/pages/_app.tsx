@@ -15,16 +15,16 @@ export default function WrappedApp({Component, ...rest}: AppProps) {
       <Component {...props.pageProps} />
     </Provider>
   )
-};
+}
 
-WrappedApp.getInitialProps = wrapper.getInitialAppProps(store => async (ctx) => {
+WrappedApp.getInitialProps = wrapper.getInitialAppProps(store => async () => {
   const dispatch:AppThunkDispatch = store.dispatch;
 
   await Promise.all([
     dispatch(fetchNavgation()),
     dispatch(fetchColors()),
     dispatch(fetchGetCart()),
-  ])
+  ]);
   
-  return {pageProps: {}};
+  return {pageProps: {store}};
 });

@@ -1,11 +1,11 @@
 import FeatchIcon from '@/components/UI/FeatchButton/FeatchIcon'
 import { API_URL } from '@/store/const'
-import { fetchDelCart, fetchPatchCart, openCart } from '@/store/features/cartSlice'
+import { fetchDelCart, fetchPatchCart } from '@/store/features/cartSlice'
 import { AppThunkDispatch } from '@/types/types'
 import { MinusSmallIcon, PlusSmallIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 export default function CartItem({product, closeModal, cartStatus}: { product: {

@@ -8,14 +8,15 @@ import { ColorsState } from "@/store/features/colorsSlice";
 import { NavigationState } from "@/store/features/navgationSlice";
 import { fetchProduct, ProductState } from "@/store/features/productSlice";
 import { AppState, wrapper } from "@/store/store";
-import { AppThunkDispatch, AppDispatch } from "@/types/types";
+import { AppThunkDispatch, AppDispatch, ClickHandler } from "@/types/types";
 import { Disclosure } from "@headlessui/react";
 import { MinusSmallIcon, PlusIcon, PlusSmallIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default ({navigation, colors, product}: {navigation: NavigationState, colors: ColorsState, product: ProductState}) => { 
+export default function CategoryPage ({navigation, colors, product}: {navigation: NavigationState, colors: ColorsState, product: ProductState}) { 
   const {data} = product;
   const [selectedColor, setSelectedColor] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
@@ -31,7 +32,7 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
     }
   };
 
-  const openModal = () => dispatch(openCart(true));
+  const openModal: ClickHandler = () => dispatch(openCart(true));
 
   useEffect(() => {
     if(cart.status !== 'loading') {
@@ -49,7 +50,7 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
 
       setInCart(item ? item.count : 0);
     }
-  }, [selectedColor, selectedSize, cart])
+  }, [selectedColor, selectedSize, cart, data])
   
   if (data === null || 'message' in data) {
     return <div></div>
@@ -57,14 +58,7 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
 
   return (
     <MainContainer keywords={data.title} navigation={navigation} colors={colors}>
-      <section x-data="
-        {
-          productOne: true,
-          productTwo: false,
-          productThree: false,
-          modalOpen: false
-        }
-      "className="bg-white md:pt-[60px] pt-[120px]">
+      <section className="bg-white md:pt-[60px] pt-[120px]">
         <div className="mx-auto max-w-7xl">
         {product.data !== null && 'id' in product.data &&
         <div className="flex justify-center lg:justify-between flex-wrap">
@@ -107,7 +101,7 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
                 </div>
                 <div className="mb-9 pt-5">
                   {inCart ?
-                    <button onClick={openModal} className="flex w-full items-center justify-between bg-black py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize} >
+                    <button onClick={openModal} className="flex w-full items-center justify-between bg-indigo-600 py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize} >
                       <div className="relative">
                         <ShoppingBagIcon
                           className="h-[30px] w-[30px]"
@@ -116,7 +110,7 @@ export default ({navigation, colors, product}: {navigation: NavigationState, col
                       </div>
                       <span className="grow">{inCart} in Beg</span>
                     </button> :
-                    <button onClick={addItem} className="flex w-full items-center justify-between bg-black py-3 px-10 text-center text-base font-semibold text-white hover:bg-opacity-90" disabled={!selectedColor || !selectedSize} >
+                    <button onClick={addItem} className={clsx("flex w-full items-center justify-between bg-indigo-600 py-3 px-10 text-center text-base font-semibold text-white", (selectedColor && selectedSize) &&"hover:bg-opacity-90", (!selectedColor || !selectedSize) && "bg-opacity-60 cursor-not-allowed")} disabled={!selectedColor || !selectedSize} >
                       {addingToCart ? 
                         <FeatchIcon className="h-[30px] w-[30px]" /> :
                         <PlusIcon height={30} width={30} />

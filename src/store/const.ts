@@ -9,7 +9,9 @@ interface Params {
   [index: string]: string;
 }
 
-export const getData = async (urlApi: string, params: Params | Function = {}, cbError = (err: string) => {}) => {
+export const getData = async (urlApi: string, params: Params | Function = {}, cbError = (err: string) => {
+  console.log(err)
+}) => {
   try {
     const url = new URL(urlApi);
 

@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Dispatch, Fragment, SetStateAction } from 'react'
 import { Dialog, Tab, Transition } from '@headlessui/react'
 import {  XMarkIcon } from '@heroicons/react/24/outline'
 import { NavigationState } from '@/store/features/navgationSlice'
@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 type MobileMenuProps = {
   open: boolean,
-  setOpen: (value: boolean) => void,
+  setOpen: Dispatch<SetStateAction<boolean>>,
   navigation: NavigationState,
   classNames: Function
 };
@@ -74,6 +74,7 @@ export default function MobileMenu({open, setOpen, navigation, classNames}:Mobil
                       {navigation.genderList.map(gender => (
                         <Tab.Panel key={`${gender}-list`} className="space-y-10 px-4 pb-8 pt-10">
                           <MobileBanner
+                            onClick={() => setOpen(false)}
                             productId={navigation.list[gender].banner.id}
                             imgSrc={navigation.list[gender].banner.bg.mobile}
                             title={navigation.list[gender].banner.description}

@@ -40,7 +40,7 @@ export default function ColorListbox({className = '', colors, selectedColors, se
             beforeEnter={() => setIsOpen(true)}
             afterLeave={() => setIsOpen(false)}
           >
-            <div className='absolute top-full translate-y-1 z-10 rounded-md bg-white py-2 pr-1 left-0 ring-black ring-opacity-5 shadow-lg'>
+            <div className='absolute w-full sm:w-auto top-full translate-y-1 z-10 rounded-md bg-white/50 backdrop-blur-md py-2 pr-1 left-0 ring-black ring-opacity-5 shadow-lg'>
             <Listbox.Options className={clsx("max-h-60 text-base overflow-auto focus:outline-none sm:text-sm", s.optionsList)}>
               {colors.map((color) => (
                 <Listbox.Option

@@ -5,14 +5,13 @@ import { rgbDataURL } from '@/utils/rgbDataURL';
 import clsx from 'clsx';
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import ColorsList from '../UI/ColorsList/ColorsList';
 
 export default function GoodsList({className, goods, colors}: {className?: string, goods: Product[], colors: ColorsState}) {
   const rgbData = rgbDataURL(200,200,200);
 
   return (
-    <ul className={clsx("grid grid-flow-row gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4", className)}>
+    <ul className={clsx("grid grid-flow-row gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-6 sm:py-8", className)}>
     {goods.map((product, index) => (
       <li key={product.id} className="transition-opacity animate-fadeIn">
         <Link href={`/products/${product.id}`} className="aspect-h-1 aspect-w-1 block overflow-hidden">

@@ -1,5 +1,5 @@
 import { createAppAsyncThunk, FetchingState } from "@/types/types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { COLORS_URL, getData } from "../const";
 import { AppState } from "../store";

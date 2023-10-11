@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { ArrowSmallDownIcon, ArrowSmallUpIcon, ArrowsUpDownIcon, CheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { ArrowSmallDownIcon, ArrowSmallUpIcon, ArrowsUpDownIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import DoubleRangeSlider, { DoubleRangeProps } from './DoubleRangeSlider/DoubleRangeSlider';
 
@@ -43,8 +43,8 @@ export default function PriceListbox({className = '', range, min, max, unit, ste
             beforeEnter={() => setIsOpen(true)}
             afterLeave={() => setIsOpen(false)}
           >
-            <div className='absolute w-full sm:w-auto top-full translate-y-1 z-10 rounded-md bg-white py-2 pr-1 left-0 ring-black ring-opacity-5 shadow-lg border border-[#e7e7e7]'>
-              <Listbox.Options >
+            <div className='absolute w-full sm:w-auto top-full translate-y-1 z-10 rounded-md bg-white/50 backdrop-blur-md py-2 pr-1 left-0 ring-black ring-opacity-5 shadow-lg border border-[#e7e7e7]'>
+              <Listbox.Options as={'div'} >
                 <DoubleRangeSlider className='' range={range} min={min} max={max} unit={unit} step={step} setRange={setRange}/>
               </Listbox.Options>
             </div>

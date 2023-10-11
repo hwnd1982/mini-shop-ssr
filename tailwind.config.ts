@@ -26,6 +26,7 @@ const config: Config = {
       'c-deepskyblue': '#00bfff',
       'c-bermudagreen': '#C5FAE8',
       'c-milk': '#FDF1BD',
+      'c-brown': '#4c3228',
     },
     extend: {
       backgroundImage: {

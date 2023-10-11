@@ -37,7 +37,7 @@ export const fetchGoods = createAsyncThunk<GoodsPayload, SearchParams>(
       url.searchParams.append(key, `${param[key]}`);
     }
     
-    return await (await fetch(url)).json();;
+    return await (await fetch(url)).json();
   }
 );
 

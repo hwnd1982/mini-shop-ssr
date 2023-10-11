@@ -6,7 +6,7 @@ import { MouseEventHandler } from "react";
 export type DefaultComponentsProps = {[index: string]: string | number};
 export type AppDispatch = Store['dispatch'];
 export type RootState = ReturnType<Store['getState']>;
-export type ClickHandler = MouseEventHandler<HTMLAnchorElement>
+export type ClickHandler = MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

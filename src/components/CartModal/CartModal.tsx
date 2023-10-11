@@ -5,6 +5,7 @@ import { CartState, openCart } from '@/store/features/cartSlice';
 import CartItem from './CartItem/CartItem';
 import { ColorsState } from '@/store/features/colorsSlice';
 import { useDispatch } from 'react-redux';
+import Checkout from '../Checkout/Checkout';
 
 export default function CartModal({cart, colors}: {
   cart: CartState
@@ -81,13 +82,13 @@ export default function CartModal({cart, colors}: {
                 <Disclosure>
                   {({ open }) => (
                     <>
-                      <Disclosure.Button className="flex w-full justify-between rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">
+                      <Disclosure.Button className="flex w-full justify-between rounded-full bg-indigo-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100">
                         <span>Оформить заказ</span>
                         <ChevronUpIcon className={`${ open ? 'rotate-180 transform' : ''} h-5 w-5`} />
                       </Disclosure.Button>
 
-                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                          Здесь будет форма...
+                        <Disclosure.Panel unmount={false} className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                          <Checkout />
                         </Disclosure.Panel>
 
                     </>

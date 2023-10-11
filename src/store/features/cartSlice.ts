@@ -1,5 +1,5 @@
 import { FetchingState } from "@/types/types";
-import { Action, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { CART_URL } from "../const";
 import { AppState } from "../store";
